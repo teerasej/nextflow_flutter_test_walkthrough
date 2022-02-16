@@ -31,5 +31,22 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
+    testWidgets('Should contain add icon', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        Builder(
+          builder: (context) {
+            return Directionality(
+              child: MediaQuery(
+                data: MediaQueryData(),
+                child: CounterButton(),
+              ),
+              textDirection: TextDirection.ltr,
+            );
+          },
+        ),
+      );
+
+      expect(find.byIcon(Icons.add), findsOneWidget);
+    });
   });
 }
