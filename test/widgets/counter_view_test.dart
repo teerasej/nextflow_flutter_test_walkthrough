@@ -5,22 +5,32 @@ import 'package:nextflow_flutter_test_walkthrough/widgets/counter_view.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  testWidgets('Should have a text: 0', (WidgetTester tester) async {
-    await tester.pumpWidget(ChangeNotifierProvider(
-      create: (context) => CounterProvider(),
-      child: Builder(
-        builder: (context) {
-          return Directionality(
-            child: MediaQuery(
-              data: MediaQueryData(),
-              child: CounterView(),
-            ),
-            textDirection: TextDirection.ltr,
-          );
-        },
-      ),
-    ));
+  group('Widget: CounterView', () {
+    late CounterProvider counterProvider;
 
-    expect(find.text('0'), findsOneWidget);
+    setUp(() {
+      counterProvider = CounterProvider();
+    });
+
+    testWidgets('Should have a text: 0 at initial',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(ChangeNotifierProvider(
+        create: (context) => counterProvider,
+        child: Builder(
+          builder: (context) {
+            return Directionality(
+              child: MediaQuery(
+                data: MediaQueryData(),
+                child: CounterView(),
+              ),
+              textDirection: TextDirection.ltr,
+            );
+          },
+        ),
+      ));
+
+      expect(find.text('0'), findsOneWidget);
+    });
+
   });
 }
