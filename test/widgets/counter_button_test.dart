@@ -48,5 +48,30 @@ void main() {
 
       expect(find.byIcon(Icons.add), findsOneWidget);
     });
+
+    testWidgets('add icon should placed in Floating action button',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        Builder(
+          builder: (context) {
+            return Directionality(
+              child: MediaQuery(
+                data: MediaQueryData(),
+                child: CounterButton(),
+              ),
+              textDirection: TextDirection.ltr,
+            );
+          },
+        ),
+      );
+
+      expect(
+        find.ancestor(
+          of: find.byIcon(Icons.add),
+          matching: find.byType(FloatingActionButton),
+        ),
+        findsOneWidget,
+      );
+    });
   });
 }
