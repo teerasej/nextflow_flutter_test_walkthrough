@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nextflow_flutter_test_walkthrough/providers/counter_provider.dart';
 import 'package:nextflow_flutter_test_walkthrough/widgets/counter_button.dart';
+import 'package:nextflow_flutter_test_walkthrough/widgets/counter_view.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -100,6 +101,36 @@ void main() {
 
         await tester.tap(find.byType(CounterButton));
         expect(counterProvider.count, 2);
+      });
+
+      testWidgets('press button should show incremented number',
+          (WidgetTester tester) async {
+        await tester.pumpWidget(ChangeNotifierProvider(
+          create: (context) => counterProvider,
+          child: Builder(
+            builder: (context) {
+              return Directionality(
+                child: MediaQuery(
+                  data: MediaQueryData(),
+                  child: Column(
+                    children: [
+                      CounterView(),
+                      CounterButton(),
+                    ],
+                  ),
+                ),
+                textDirection: TextDirection.ltr,
+              );
+            },
+          ),
+        ));
+
+        expect(find.text('0'), findsOneWidget);
+
+        await tester.tap(find.byType(CounterButton));
+        await tester.pumpAndSettle();
+
+        expect(find.text('1'), findsOneWidget);
       });
     },
   );
