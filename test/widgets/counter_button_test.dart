@@ -6,12 +6,6 @@ import 'package:provider/provider.dart';
 
 void main() {
   group('Widget: Counter Button', () {
-    // late CounterProvider counterProvider;
-
-    // setUp(() {
-    //   counterProvider = CounterProvider();
-    // });
-
     testWidgets('Should built with floating action button',
         (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -74,4 +68,39 @@ void main() {
       );
     });
   });
+
+  group(
+    'Counter button in action',
+    () {
+      late CounterProvider counterProvider;
+
+      setUp(() {
+        counterProvider = CounterProvider();
+      });
+      testWidgets('press button should increment counter',
+          (WidgetTester tester) async {
+        await tester.pumpWidget(ChangeNotifierProvider(
+          create: (context) => counterProvider,
+          child: Builder(
+            builder: (context) {
+              return Directionality(
+                child: MediaQuery(
+                  data: MediaQueryData(),
+                  child: CounterButton(),
+                ),
+                textDirection: TextDirection.ltr,
+              );
+            },
+          ),
+        ));
+
+        await tester.tap(find.byType(CounterButton));
+
+        expect(counterProvider.count, 1);
+
+        await tester.tap(find.byType(CounterButton));
+        expect(counterProvider.count, 2);
+      });
+    },
+  );
 }
