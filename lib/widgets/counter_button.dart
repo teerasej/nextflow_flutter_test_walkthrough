@@ -11,7 +11,6 @@ class CounterButton extends StatelessWidget {
       onPressed: () {
         context.read<CounterProvider>().increment();
       },
-      tooltip: 'Increment',
       child: const Icon(Icons.add),
     );
   }
