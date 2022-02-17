@@ -7,6 +7,7 @@ class CounterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return Text('1');
     return Consumer<CounterProvider>(
         builder: (context, CounterProvider counter, _) {
       return Text('${counter.count}');
